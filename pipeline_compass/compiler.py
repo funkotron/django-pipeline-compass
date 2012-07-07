@@ -21,4 +21,7 @@ class CompassCompiler(CompilerBase):
   def compile_file(self, infile, outfile, outdated=False, force=False):
     if not outdated and not force:
         return # No need to recompiled file
-    return scss.Scss().compile(infile,outfile)
+    out=open(outfile,'w')
+    compiled = scss.Scss().compile(infile)
+    out.write(compiled)
+    return compiled

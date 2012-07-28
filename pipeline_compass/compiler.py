@@ -19,11 +19,12 @@ class CompassCompiler(CompilerBase):
     return filename.endswith('.scss')
 
   def compile_file(self, infile, outfile, outdated=False, force=False):
-    print infile, outfile, outdated, force
     if not outdated and not force:
         return # No need to recompiled file
-    compiled = scss.Scss().compile(infile)
-
+    incode = open(infile).read()
+    #Add the inpath to scss
+    scss.LOAD_PATHS += (',' + infile[:infile.rindex('/')])
+    compiled = scss.Scss().compile(incode)
     if outfile:
         fout=open(outfile,'w')
         fout.write(compiled)
